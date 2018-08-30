@@ -1,5 +1,6 @@
 import { promises } from 'fs'
 import { BucketOptions } from './types'
+import { assertPosixPath } from './assert-posix';
 
 const { stat } = promises
 
@@ -14,12 +15,16 @@ export const bucketPaths = async ( paths: string[], options: BucketOptions ) => 
   const { directories, files } = options
 
   for ( let i = 0; i < paths.length; i++ ) {
-    const stats = await stat( paths[ i ] )
+    const path = paths[ i ]
+
+    assertPosixPath( path, 'path' )
+
+    const stats = await stat( path )
 
     if ( directories !== undefined && stats.isDirectory() ) {
-      directories.push( paths[ i ] )
+      directories.push( path )
     } else if ( files !== undefined && stats.isFile() ) {
-      files.push( paths[ i ] )
+      files.push( path )
     }
   }
 }

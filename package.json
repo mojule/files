@@ -1,0 +1,27 @@
+{
+  "name": "@mojule/files",
+  "version": "0.1.0",
+  "description": "File utilities",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && mocha ./dist/test",
+    "coverage": "tsc && nyc --reporter=html --reporter=text mocha ./dist/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mojule/files.git"
+  },
+  "keywords": [],
+  "author": "Nik Coughlin <nrkn.com@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mojule/files/issues"
+  },
+  "homepage": "https://github.com/mojule/files#readme",
+  "devDependencies": {
+    "@types/node": "^10.9.2",
+    "@types/mocha": "^5.2.5"
+  }
+}

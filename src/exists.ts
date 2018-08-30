@@ -1,5 +1,13 @@
-import { access } from 'fs'
+import { stat } from 'fs'
 
-export const exists = ( path: string ) => new Promise(
-  resolve => access( path, err => resolve( !err ) )
+export const exists = ( path: string ) => new Promise<boolean>(
+  resolve => {
+    stat( path, err => {
+      if( err ){
+        return resolve( false )
+      }
+
+      resolve( true )
+    })
+  }
 )

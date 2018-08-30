@@ -1,10 +1,13 @@
 import { readdirJoin } from './readdir-join'
 import { bucketPaths } from './bucket-paths'
 import { posix } from 'path'
+import { assertPosixPath } from './assert-posix';
 
 const { relative } = posix
 
 export const readdirFiles = async ( directoryPath: string ) => {
+  assertPosixPath( directoryPath, 'directoryPath' )
+
   const directories: string[] = []
   const files: string[] = []
   const buckets = { directories, files }
