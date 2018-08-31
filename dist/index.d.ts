@@ -1,3 +1,4 @@
+export { assertPosixPath } from './assert-posix';
 export { bucketPaths } from './bucket-paths';
 export { ensureDirectories, ensureParentDirectories } from './ensure-directories';
 export { exists } from './exists';

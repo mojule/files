@@ -1,144 +1,69 @@
 import * as assert from 'assert'
-import { promises } from 'fs'
+import { readdirDeep, readdirFiles, readPathBufferMap } from '..'
+import { assertPosixPath } from '../assert-posix';
+import { bucketPaths } from '../bucket-paths';
+import { PathBufferMap } from '../types';
+import { writePathBufferMap } from '../path-buffer-maps';
+import { rmdirDeep } from '../rmdir-deep';
 
-const { unlink } = promises
+const testPath = './src/test/fixtures/z'
 
-import {
-  bucketPaths, ensureDirectories, ensureParentDirectories, exists,
-  writePathBufferMap, readPathBufferMap, createPathBufferMap, readdirDeep,
-  readdirFiles, readdirJoin
-} from '..'
+describe( 'files', () => {
+  it( 'readdirDeep', async () => {
+    const expect = [ 'a.txt', 'b.txt', 'c', 'c/d.txt', 'c/e', 'c/e/f.txt' ]
+    const allPaths = await readdirDeep( testPath )
 
-describe( 'files', async () => {
-  const bufferMap = await readPathBufferMap( 'src\\test\\fixtures' )
+    assert.deepEqual( allPaths, expect )
+  })
 
-  console.log( 'wtf', bufferMap )
+  it( 'readdirFiles', async () => {
+    const expect = [ 'a.txt', 'b.txt', 'c/d.txt', 'c/e/f.txt' ]
+    const filePaths = await readdirFiles( testPath )
 
-  before( async () => {
+    assert.deepEqual( filePaths, expect )
+  })
 
-  } )
+  it( 'readPathBufferMap', async () => {
+    const expect = {
+      'a.txt': [ 65 ],
+      'b.txt': [ 66 ],
+      'c/d.txt': [ 68 ],
+      'c/e/f.txt': [ 70 ]
+    }
 
-  after( () => {
-    //unlink( 'src\\test\\fixtures\\out' )
-  } )
+    const map = await readPathBufferMap( testPath )
 
-  // describe( 'readdirJoin', () => {
-  //   it( 'reads the dir and joins the contents to the root path', async () => {
-  //     const contents = await readdirJoin( './src/test/fixtures' )
-  //     const expect = [
-  //       'src\\test\\fixtures\\a.txt',
-  //       'src\\test\\fixtures\\b.txt',
-  //       'src\\test\\fixtures\\c',
-  //     ]
+    assert.deepEqual( map, expect )
+  })
 
-  //     assert.deepEqual( contents, expect )
-  //   })
-  // } )
+  it( 'writePathBufferMap', async () => {
+    const expect = [ 'a.txt', 'b.txt', 'c', 'c/d.txt', 'c/e', 'c/e/f.txt' ]
+    const map = await readPathBufferMap( testPath )
+    const newMap: PathBufferMap = {}
 
-  // describe( 'bucketPaths', () => {
-  //   it( 'gets directories', async () => {
-  //     const contents = await readdirJoin( './src/test/fixtures' )
-  //     const directories: string[] = []
-  //     const expect = [
-  //       'src\\test\\fixtures\\c'
-  //     ]
+    Object.keys( map ).forEach( mapPath => {
+      newMap[ `y/${ mapPath }` ] = map[ mapPath ]
+    })
 
-  //     await bucketPaths( contents, { directories } )
+    await writePathBufferMap( './src/test/fixtures', newMap )
 
-  //     assert.deepEqual( directories, expect )
-  //   } )
+    const allPaths = await readdirDeep( './src/test/fixtures/y' )
 
-  //   it( 'gets files', async () => {
-  //     const contents = await readdirJoin( './src/test/fixtures' )
-  //     const files: string[] = []
-  //     const expect = [
-  //       'src\\test\\fixtures\\a.txt',
-  //       'src\\test\\fixtures\\b.txt'
-  //     ]
+    assert.deepEqual( allPaths, expect )
 
-  //     await bucketPaths( contents, { files } )
+    await rmdirDeep( './src/test/fixtures/y' )
+  })
 
-  //     assert.deepEqual( files, expect )
-  //   } )
+  it( 'fails with non-posix path', () => {
+    assert.throws( () => assertPosixPath( 'c:\\temp' ) )
+  })
 
-  //   it( 'gets both', async () => {
-  //     const contents = await readdirJoin( './src/test/fixtures' )
-  //     const directories: string[] = []
-  //     const files: string[] = []
-  //     const expectDirectories = [
-  //       'src\\test\\fixtures\\c'
-  //     ]
-  //     const expectFiles = [
-  //       'src\\test\\fixtures\\a.txt',
-  //       'src\\test\\fixtures\\b.txt'
-  //     ]
-
-  //     await bucketPaths( contents, { files, directories } )
-
-  //     assert.deepEqual( files, expectFiles )
-  //     assert.deepEqual( directories, expectDirectories )
-  //   } )
-  // } )
-
-  // describe( 'ensureDirectories', () => {
-  //   /*
-  //     bad test because it doesn't actually create any new directories
-
-  //     we don't create any new directories because unlink doesn't work (perm)
-  //     so the newly created directories interfere with other tests and also
-  //     wouldn't be created next time it's run
-
-  //     ideally we'd use mock-fs or similar but fs.promises aren't working
-  //     properly in it atm
-
-  //     we could do a tear down or something
-  //   */
-  //   it( 'creates directories as needed', async () => {
-  //     const directories = [
-  //       'src\\test\\fixtures\\c'
-  //     ]
-
-  //     await ensureDirectories( directories )
-
-  //     for( let i = 0; i < directories.length; i++ ){
-  //       const dirExists = await exists( directories[ i ] )
-  //       assert( dirExists )
-  //     }
-  //   })
-  // } )
-
-  // describe( 'ensureParentDirectories', () => {
-  //   // see comment above
-  //   it( 'creates directories as needed', async () => {
-  //     await ensureParentDirectories( 'src\\test\\fixtures\\c\\e\\f.txt' )
-
-  //     const dirExists = await exists( 'src\\test\\fixtures\\c\\e' )
-
-  //     assert( dirExists )
-  //   } )
-  // } )
-
-  // describe( 'exists', () => {
-
-  // } )
-
-  // describe( 'writePathBufferMap', () => {
-
-  // } )
-
-  // describe( 'readPathBufferMap', () => {
-
-  // } )
-
-  // describe( 'createPathBufferMap', () => {
-
-  // } )
-
-  // describe( 'readdirDeep', () => {
-
-  // } )
-
-  // describe( 'readdirFiles', () => {
-
-  // } )
+  it( 'bucketPath fails with no options', async () => {
+    try {
+      await bucketPaths( [ testPath ], (<any>{}) )
+      assert( false )
+    } catch( err ) {
+      assert( err )
+    }
+  })
 })

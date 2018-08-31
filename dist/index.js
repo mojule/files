@@ -1,5 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var assert_posix_1 = require("./assert-posix");
+exports.assertPosixPath = assert_posix_1.assertPosixPath;
 var bucket_paths_1 = require("./bucket-paths");
 exports.bucketPaths = bucket_paths_1.bucketPaths;
 var ensure_directories_1 = require("./ensure-directories");

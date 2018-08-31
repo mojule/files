@@ -23,7 +23,7 @@ export const writePathBufferMap = async ( path: string, map: PathBufferMap ) => 
   }
 }
 
-export const createPathBufferMap = async ( paths: string[], rootPath = '' ) => {
+export const createPathBufferMap = async ( paths: string[], rootPath: string ) => {
   assertPosixPath( rootPath, 'rootPath' )
 
   const fileBuffers: PathBufferMap = {}

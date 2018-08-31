@@ -23,5 +23,10 @@
   "devDependencies": {
     "@types/node": "^10.9.2",
     "@types/mocha": "^5.2.5"
+  },
+  "nyc": {
+    "exclude": [
+      "dist/test"
+    ]
   }
 }

@@ -19,7 +19,7 @@ exports.rmdirDeep = async (directoryPath) => {
         paths.push(...childPaths);
         await bucket_paths_1.bucketPaths(childPaths, { directories, files });
     }
-    await Promise.all(files.map(file => unlink(file)));
+    await Promise.all(files.map(unlink));
     for (let i = 0; i < removeDirectories.length; i++) {
         await rmdir(removeDirectories[i]);
     }

@@ -18,7 +18,7 @@ exports.writePathBufferMap = async (path, map) => {
         await writeFile(writePath, buffer);
     }
 };
-exports.createPathBufferMap = async (paths, rootPath = '') => {
+exports.createPathBufferMap = async (paths, rootPath) => {
     assert_posix_1.assertPosixPath(rootPath, 'rootPath');
     const fileBuffers = {};
     return Promise.all(paths.map(async (filePath) => {

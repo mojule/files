@@ -25,7 +25,7 @@ export const rmdirDeep = async ( directoryPath: string ) => {
     await bucketPaths( childPaths, { directories, files } )
   }
 
-  await Promise.all( files.map( file => unlink( file ) ) )
+  await Promise.all( files.map( unlink ) )
 
   for ( let i = 0; i < removeDirectories.length; i++ ){
     await rmdir( removeDirectories[ i ] )
