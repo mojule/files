@@ -1,6 +1,6 @@
 import { promises } from 'fs'
 import { BucketOptions } from './types'
-import { assertPosixPath } from './assert-posix';
+import { assertPosixPath } from './assert-posix'
 
 const { stat } = promises
 

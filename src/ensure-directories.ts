@@ -1,7 +1,7 @@
 import { promises } from 'fs'
 import { posix } from 'path'
 import { exists } from './exists'
-import { assertPosixPath } from './assert-posix';
+import { assertPosixPath } from './assert-posix'
 
 const { mkdir } = promises
 const { resolve, parse } = posix

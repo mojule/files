@@ -1,7 +1,7 @@
 import { readdirJoin } from './readdir-join'
 import { bucketPaths } from './bucket-paths'
 import { posix } from 'path'
-import { assertPosixPath } from './assert-posix';
+import { assertPosixPath } from './assert-posix'
 
 const { relative } = posix
 
