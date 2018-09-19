@@ -6,6 +6,7 @@ const assert_posix_1 = require("../assert-posix");
 const bucket_paths_1 = require("../bucket-paths");
 const path_buffer_maps_1 = require("../path-buffer-maps");
 const rmdir_deep_1 = require("../rmdir-deep");
+const zip_1 = require("../zip");
 const testPath = './src/test/fixtures/z';
 describe('files', () => {
     it('readdirDeep', async () => {
@@ -47,6 +48,26 @@ describe('files', () => {
         try {
             await bucket_paths_1.bucketPaths([testPath], {});
             assert(false);
+        }
+        catch (err) {
+            assert(err);
+        }
+    });
+    it('zips and unzips', async () => {
+        const expect = {
+            'a.txt': [65],
+            'b.txt': [66],
+            'c/d.txt': [68],
+            'c/e/f.txt': [70]
+        };
+        const map = await __1.readPathBufferMap(testPath);
+        const zipBuffer = await zip_1.zip(map);
+        const unzippedMap = await zip_1.unzip(zipBuffer);
+        assert.deepEqual(expect, unzippedMap);
+    });
+    it('unzip fails on bad zip buffer', async () => {
+        try {
+            await zip_1.unzip(new Buffer(0));
         }
         catch (err) {
             assert(err);

@@ -1,6 +1,6 @@
 {
   "name": "@mojule/files",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "File utilities",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,5 +29,11 @@
     "exclude": [
       "dist/test"
     ]
+  },
+  "dependencies": {
+    "@types/yauzl": "^2.9.0",
+    "@types/yazl": "^2.4.0",
+    "yauzl": "^2.10.0",
+    "yazl": "^2.4.3"
   }
 }

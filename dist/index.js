@@ -21,4 +21,7 @@ var readdir_join_1 = require("./readdir-join");
 exports.readdirJoin = readdir_join_1.readdirJoin;
 var rmdir_deep_1 = require("./rmdir-deep");
 exports.rmdirDeep = rmdir_deep_1.rmdirDeep;
+var zip_1 = require("./zip");
+exports.zip = zip_1.zip;
+exports.unzip = zip_1.unzip;
 //# sourceMappingURL=index.js.map

@@ -1,10 +1,11 @@
 import * as assert from 'assert'
 import { readdirDeep, readdirFiles, readPathBufferMap } from '..'
-import { assertPosixPath } from '../assert-posix';
-import { bucketPaths } from '../bucket-paths';
-import { PathBufferMap } from '../types';
-import { writePathBufferMap } from '../path-buffer-maps';
-import { rmdirDeep } from '../rmdir-deep';
+import { assertPosixPath } from '../assert-posix'
+import { bucketPaths } from '../bucket-paths'
+import { PathBufferMap } from '../types'
+import { writePathBufferMap } from '../path-buffer-maps'
+import { rmdirDeep } from '../rmdir-deep'
+import { zip, unzip } from '../zip'
 
 const testPath = './src/test/fixtures/z'
 
@@ -63,6 +64,30 @@ describe( 'files', () => {
       await bucketPaths( [ testPath ], (<any>{}) )
       assert( false )
     } catch( err ) {
+      assert( err )
+    }
+  })
+
+  it( 'zips and unzips', async () => {
+    const expect = {
+      'a.txt': [ 65 ],
+      'b.txt': [ 66 ],
+      'c/d.txt': [ 68 ],
+      'c/e/f.txt': [ 70 ]
+    }
+
+    const map = await readPathBufferMap( testPath )
+
+    const zipBuffer = await zip( map )
+    const unzippedMap = await unzip( zipBuffer )
+
+    assert.deepEqual( expect, unzippedMap )
+  })
+
+  it( 'unzip fails on bad zip buffer', async () => {
+    try {
+      await unzip( new Buffer( 0 ) )
+    } catch ( err ) {
       assert( err )
     }
   })

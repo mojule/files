@@ -17,3 +17,7 @@ export declare type BucketOptions = DirectoryBuckets | FileBuckets | Buckets;
 export interface PathBufferMap {
     [path: string]: Buffer;
 }
+export interface ZipToFileBuffersOptions {
+    filter: (fileName: string) => boolean;
+    map: (fileName: string) => string;
+}

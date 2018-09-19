@@ -7,3 +7,4 @@ export { readdirDeep } from './readdir-deep';
 export { readdirFiles } from './readdir-files';
 export { readdirJoin } from './readdir-join';
 export { rmdirDeep } from './rmdir-deep';
+export { zip, unzip } from './zip';
