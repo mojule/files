@@ -1,10 +1,9 @@
 {
   "name": "@mojule/files",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "File utilities",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "access": "public",
   "scripts": {
     "build": "tsc",
     "test": "tsc && mocha ./dist/test",
@@ -21,7 +20,6 @@
     "url": "https://github.com/mojule/files/issues"
   },
   "homepage": "https://github.com/mojule/files#readme",
-  "private": false,
   "devDependencies": {
     "@types/node": "^10.9.2",
     "@types/mocha": "^5.2.5"
