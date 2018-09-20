@@ -1,9 +1,10 @@
 {
   "name": "@mojule/files",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "File utilities",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "access": "public",
   "scripts": {
     "build": "tsc",
     "test": "tsc && mocha ./dist/test",
