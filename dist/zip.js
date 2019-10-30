@@ -7,7 +7,7 @@ const defaultZipToFileBuffersOptions = {
     map: s => s
 };
 exports.unzip = async (zipFileBuffer, options = defaultZipToFileBuffersOptions) => {
-    options = Object.assign({}, defaultZipToFileBuffersOptions, options);
+    options = Object.assign(Object.assign({}, defaultZipToFileBuffersOptions), options);
     const { filter, map } = options;
     const pathBufferMap = {};
     return new Promise((resolve, reject) => {
@@ -22,7 +22,7 @@ exports.unzip = async (zipFileBuffer, options = defaultZipToFileBuffersOptions) 
                 if (/\/$/.test(entry.fileName)) {
                     zipfile.readEntry();
                 }
-                if (!filter(entry.fileName)) {
+                else if (!filter(entry.fileName)) {
                     zipfile.readEntry();
                 }
                 else {

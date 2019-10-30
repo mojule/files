@@ -29,7 +29,7 @@ export const unzip = async ( zipFileBuffer: Buffer, options = defaultZipToFileBu
           // skip empty folders and unexpected files
           if ( /\/$/.test( entry.fileName ) ) {
             zipfile!.readEntry()
-          } if ( !filter( entry.fileName ) ) {
+          } else if ( !filter( entry.fileName ) ) {
             zipfile!.readEntry()
           } else {
             let chunks: Buffer[] = []
