@@ -67,7 +67,7 @@ describe('files', () => {
     });
     it('unzip fails on bad zip buffer', async () => {
         try {
-            await zip_1.unzip(new Buffer(0));
+            await zip_1.unzip(Buffer.from([0]));
         }
         catch (err) {
             assert(err);
