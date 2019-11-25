@@ -1,6 +1,5 @@
 import { promises } from 'fs'
 import { posix } from 'path'
-import { exists } from './exists'
 import { assertPosixPath } from './assert-posix'
 
 const { mkdir } = promises
@@ -31,8 +30,10 @@ export const ensureDirectories = async ( paths: string[] ) => {
 
     assertPosixPath( path, 'path' )
 
-    const directoryExists = await exists( path )
-
-    if( !directoryExists ) await mkdir( path )
+    try {
+      await mkdir( path )
+    } catch( err ){
+      if( err.code !== 'EEXIST' ) throw err
+    }
   }
 }
